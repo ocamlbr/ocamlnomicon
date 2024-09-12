@@ -1,0 +1,5 @@
+[book]
+authors = ["Camilo Cunha de Azevedo"]
+language = "pt-br"
+multilingual = false
+src = "src"
