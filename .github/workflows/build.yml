@@ -6,17 +6,16 @@ on:
 
 jobs:
   build:
-    name: build
     runs-on: ubuntu-latest
     env:
       MDBOOK_VERSION: '0.4.12'
       MDBOOK_LINKCHECK_VERSION: '0.7.4'
       MDBOOK_MERMAID_VERSION: '0.8.3'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: true
-    - name: Install mdbook
+    - name: Install mdbook and plugins
       run: |
         mkdir ~/tools
         curl -L https://github.com/rust-lang/mdBook/releases/download/v$MDBOOK_VERSION/mdbook-v$MDBOOK_VERSION-x86_64-unknown-linux-gnu.tar.gz | tar xz -C ~/tools
@@ -33,8 +32,8 @@ jobs:
         echo ~/tools >> $GITHUB_PATH
     - name: Build
       run: mdbook build
-    # share between different jobs
-    - uses: actions/upload-artifact@v3
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
         name: book
         path: book/
